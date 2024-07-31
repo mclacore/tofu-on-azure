@@ -1,0 +1,171 @@
+## Prerequisites
+
+- [An Azure account](https://azure.microsoft.com/en-us/free/)
+- An Azure service principal: [portal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal), [CLI](https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash)
+  1. Note the following values:
+     - `clientId`
+     - `clientSecret`
+     - `subscriptionId`
+     - `tenantId`
+  2. Provide your service principal with access to your [subscription](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
+
+## Install OpenTofu
+
+### Brew
+
+```bash
+brew update
+brew install opentofu
+```
+
+### Standalone
+
+```bash
+# Download the installer script:
+curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
+# Alternatively: wget --secure-protocol=TLSv1_2 --https-only https://get.opentofu.org/install-opentofu.sh -O install-opentofu.sh
+
+# Grant execution permissions:
+chmod +x install-opentofu.sh
+
+# Please inspect the downloaded script at this point.
+
+# Run the installer:
+./install-opentofu.sh --install-method standalone
+
+# Remove the installer:
+rm -f install-opentofu.sh
+```
+
+### PowerShell
+
+```powershell
+# Download the installer script:
+Invoke-WebRequest -outfile "install-opentofu.ps1" -uri "https://get.opentofu.org/install-opentofu.ps1"
+
+# Please inspect the downloaded script at this point.
+
+# Run the installer:
+& .\install-opentofu.ps1 -installMethod standalone
+
+# Remove the installer:
+Remove-Item install-opentofu.ps1
+```
+
+Verify version:
+
+```bash
+tofu -version
+```
+
+> [!TIP]
+> If you already have Terraform, I won't cover migrating from OpenTofu. However, you can find out more about how to do that [here](https://opentofu.org/docs/intro/migration/).
+
+## Deploy a resource group
+
+1. Create a new directory to deploy a new resource group and `cd` into it
+2. Create a file named `providers.tf` and paste the following:
+
+```terraform
+terraform {
+  required_providers {
+    azurerm = {
+        source  = "hashicorp/azurerm"
+        version = "~>3.0"
+    }
+    random = {
+        source  = "hashicorp/random"
+        version = "~>3.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+
+  subscription_id   = "<subscriptionId>"
+  tenant_id         = "<tenantId>"
+  client_id         = "<clientId>"
+  client_secret     = "<clientSecret>"
+}
+```
+
+3. Create a new file named `main.tf` and paste the following:
+
+```terraform
+resource "random_pet" "rg_name" {
+    prefix = var.resource_group_name_prefix
+}
+
+resource "azurerm_resource_group" "rg" {
+    name     = random_pet.rg_name.id
+    location = var.resouce_group_location
+}
+```
+
+4. Create a new file named `variables.tf` and paste the following:
+
+```terraform
+variable "resource_group_location" {
+  type        = string
+  default     = "westus"
+  description = "Location of the resource group."
+}
+
+variable "resource_group_name_prefix" {
+  type        = string
+  default     = "tofu-on-azure"
+  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+}
+```
+
+5. Create a new file named `outputs.tf` and paste the following:
+
+```terraform
+output "resource_group_name" {
+  value = azurerm_resource_group.rg.name
+}
+```
+
+6. Run `tofu init -upgrade`
+   - `tofu init` is used to initialize the OpenTofu environment and download the AzureRM provider
+   - `-upgrade` parameter upgrades the provider plugins to the newest version
+7. Run `tofu plan -out main.tfplan`
+   - `tofu plan` creates an execution plan, but doesn't execute it. It determines which actions are necessary to create the configuration specified. Important for comparing changes.
+   - `-out` is an optional parameter that allows you to specify an output file for the plan, otherwise it prints to console
+8. Run `tofu apply main.tfplan`
+   - `tofu apply` is used to deploy the configuration
+   - `tofu apply` can be ran without specifying a plan file, and it'll run on your detected `.tf` files
+
+## Verify results
+
+- [Portal](https://portal.azure.com/#browse/resourcegroups)
+- [CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli):
+
+  1. Get the Azure resource group name
+
+  ```bash
+  resource_group_name=$(tofu output -raw resource_group_name)
+  ```
+
+  2. Run `az group show` to display the resource group
+
+  ```bash
+  az group show --name $resource_group_name
+  ```
+
+## Cleanup resources
+
+1. Run `tofu plan` and specify `-destroy` tag
+
+```bash
+tofu plan -destroy -out main.destroy.tfplan
+```
+
+2. Run `tofu apply` to apply the execution plan
+
+```bash
+tofu apply main.destroy.tfplan
+```
+
+_Alternatively, you can run `tofu destroy` without `tofu plan/tofu apply`_
