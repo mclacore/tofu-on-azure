@@ -8,6 +8,14 @@
      - `subscriptionId`
      - `tenantId`
   2. Provide your service principal with access to your [subscription](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
+- Set your environment variables
+
+```bash
+export ARM_SUBSCRIPTION_ID="<azure_subscription_id>"
+export ARM_TENANT_ID="<azure_subscription_tenant_id>"
+export ARM_CLIENT_ID="<service_principal_appid>"
+export ARM_CLIENT_SECRET="<service_principal_password>"
+```
 
 ## Install OpenTofu
 
@@ -82,11 +90,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-
-  subscription_id   = "<subscriptionId>"
-  tenant_id         = "<tenantId>"
-  client_id         = "<clientId>"
-  client_secret     = "<clientSecret>"
 }
 ```
 
