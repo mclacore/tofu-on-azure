@@ -1,14 +1,28 @@
+This is a guide for setting up the Azure CLI and OpenTofu to deploy a resource group in Azure.
+
 ## Prerequisites
 
 - [An Azure account](https://azure.microsoft.com/en-us/free/)
-- An Azure service principal: [portal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal), [CLI](https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash)
-  1. Note the following values:
-     - `clientId`
-     - `clientSecret`
-     - `subscriptionId`
-     - `tenantId`
-  2. Provide your service principal with access to your [subscription](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
-- Set your environment variables
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+## Create Azure Service Principal
+
+If you want to follow the [portal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) steps, feel free. I will be covering the [CLI](https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash) steps.
+
+1. Log into Azure CLI and get your subscription ID (save `subscription_id` for step 3)
+
+```bash
+az login
+az account list --output table
+```
+
+2. Create a service principal (save `appId`, `password`, and `tenant` for step 3)
+
+```bash
+az ad sp create-for-rbac --name "tofu-on-azure" --role owner --scopes /subscriptions/<azure_subscription_id>
+```
+
+3. Set your environment variables
 
 ```bash
 export ARM_SUBSCRIPTION_ID="<azure_subscription_id>"
@@ -67,7 +81,7 @@ tofu -version
 ```
 
 > [!TIP]
-> If you already have Terraform, I won't cover migrating from OpenTofu. However, you can find out more about how to do that [here](https://opentofu.org/docs/intro/migration/).
+> If you already have Terraform and want to migrate to OpenTofu, you can find out more about that [here](https://opentofu.org/docs/intro/migration/).
 
 ## Deploy a resource group
 
@@ -142,20 +156,21 @@ output "resource_group_name" {
 
 ## Verify results
 
-- [Portal](https://portal.azure.com/#browse/resourcegroups)
-- [CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli):
+[Portal](https://portal.azure.com/#browse/resourcegroups) method.
 
-  1. Get the Azure resource group name
+### CLI
 
-  ```bash
-  resource_group_name=$(tofu output -raw resource_group_name)
-  ```
+1. Get the Azure resource group name
 
-  2. Run `az group show` to display the resource group
+```bash
+resource_group_name=$(tofu output -raw resource_group_name)
+```
 
-  ```bash
-  az group show --name $resource_group_name
-  ```
+2. Run `az group show` to display the resource group
+
+```bash
+az group show --name $resource_group_name
+```
 
 ## Cleanup resources
 
