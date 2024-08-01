@@ -70,16 +70,12 @@ To configure the backend state, you need the following Azure storage information
 
 - `storage_account_name`: The name of the storage account
 - `container_name`: The name of the container
-- `access_key`: The access key of the storage account
 - `key`: The name of the state store file to be created
 
-1. It's recommended to use an environment variable for the `access_key` value as it is sensitive. Run the following command to get the storage access key and store it as an environment variable:
-
-//TODO - Add command to get resource group name and storage account name
+1. Fetch storage account name with the following command:
 
 ```bash
-ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv)
-export ARM_ACCESS_KEY=$ACCOUNT_KEY
+az storage account list --resource-group tfstate --query "[].name" --output tsv
 ```
 
 2. Once you have the required information, create a new file named `backend.tf` in the directory and paste the following:
@@ -112,6 +108,12 @@ resource "azurerm_resource_group" "state-demo-secure" {
 ```
 
 3. Run `tofu init` then `tofu apply` to configure the backend state
+
+4. Confirm the state is being stored by running the following:
+
+```bash
+az storage blob list --account-name <storage_account_name> --container-name tfstate
+```
 
 > [!NOTE] State locking
 > Azure blobs are automatically locked before any operation that writes state. This pattern prevents concurrent state operations, which can cause corruption. For more info, see [state locking](https://www.terraform.io/docs/state/locking.html)
