@@ -23,7 +23,7 @@ export ARM_CLIENT_SECRET="<service_principal_password>"
 Assuming you have OpenTofu configured at this point, let's configure our remote state storage accoung using it!
 
 1. Create a new directory for your remote state storage account
-2. Create a new file named `main.tf` in the directory and paste the following:
+2. Create a new file named `providers.tf` in the directory and paste the following:
 
 ```terraform
 terraform {
@@ -38,7 +38,11 @@ terraform {
 provider "azurerm" {
   features {}
 }
+```
 
+3. Create a new file named `main.tf` in the directory and paste the following:
+
+```terraform
 resource "random_string" "resource_code" {
   length  = 5
   special = false
@@ -66,7 +70,7 @@ resource "azurerm_storage_container" "tfstate" {
 }
 ```
 
-3. Run `tofu init` then `tofu apply` to configure the Azure storage account and container
+4. Run `tofu init` then `tofu apply` to configure the Azure storage account and container
 
 ## Configure remote state backend
 
