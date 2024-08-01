@@ -115,8 +115,8 @@ resource "azurerm_resource_group" "state-demo-secure" {
 az storage blob list --account-name <storage_account_name> --container-name tfstate
 ```
 
-> [!note] State locking
+> [!NOTE]
 > Azure blobs are automatically locked before any operation that writes state. This pattern prevents concurrent state operations, which can cause corruption. For more info, see [state locking](https://www.terraform.io/docs/state/locking.html)
 
-> [!note] Encryption-at-rest
+> [!NOTE]
 > Data stored in an Azure blob is encrypted before being persisted. When needed, the OpenTofu retrieves the state from the backend and stores it in local memory. If this pattern is used, state is never written to your local disk. For more info about Azure storage encryption, see [Azure storage encryption for data at rest](https://learn.microsoft.com/en-us/azure/storage/common/storage-service-encryption)
