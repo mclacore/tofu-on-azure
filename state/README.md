@@ -1,4 +1,4 @@
-OpenTofu state is used to reconcile deployed resources with the desired state. State allowes OpenTofu to know what Azure resources to add, update, or delete.
+OpenTofu state is used to reconcile deployed resources with the desired state. State allows OpenTofu to know what Azure resources to add, update, or delete.
 
 By default, OpenTofu state is stored locally, which isn't ideal for a few reasons:
 
