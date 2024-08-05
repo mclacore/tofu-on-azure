@@ -37,8 +37,7 @@ module "subnet" {
 }
 ```
 
-> [!TIP]
-> Terraform providers typically handle resource dependencies automatically, but in some cases, you need to use `depends_on` to enforce the correct order of operations.
+_Terraform providers typically handle resource dependencies automatically, but in some cases, you need to use `depends_on` to enforce the correct order of operations._
 
 </details>
 
