@@ -7,3 +7,5 @@ This repo aims to help you get started using OpenTofu to manage your Azure resou
 
 1. [Setup OpenTofu and Azure](/setup/README.md)
 2. [Set up state in Azure Storage](/state/README.md)
+3. [Review IaC best practices](/best-practices/README.md)
+4. [Import existing resources into OpenTofu](/import/README.md)
