@@ -26,7 +26,7 @@ module "resource_group" {
 
 ```terraform
 resource "azurerm_virtual_network" "vnet" {
-    name                = "my-vnet"
+    name = "my-vnet"
 }
 
 module "subnet" {
