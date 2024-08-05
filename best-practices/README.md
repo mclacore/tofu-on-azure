@@ -16,7 +16,9 @@ The guide below outlines recommended best practices to follow when using OpenTof
 | Storage Account | `store<project><env>`     |
 
 </details>
+
 - **Implement Input Validation**: Validate input variables to ensure they meet expected criteria and prevent misconfigurations. Use validation blocks to enforce constraints on variables. Richer validation can be achieved using [JSON Schema](https://developer.hashicorp.com/terraform/language/values/variables#custom-validation-rules).
+
 <details>
 <summary>Example `variables.tf`</summary>
 
@@ -43,6 +45,7 @@ variable "resource_name" {
 ```
 
 </details>
+
 <details>
 <summary>Example `variables.json`</summary>
 
@@ -74,6 +77,7 @@ variable "resource_name" {
 ```
 
 </details>
+
 - **Use Locals**: Utilize locals to encapsulate complex expressions around variable manipulation, string formatting, and conditional logic. Makes your code more readable, maintainable, and reusable.
 
 <details>
@@ -92,6 +96,7 @@ resource "azurerm_storage_account" "storage" {
 ```
 
 </details>
+
 - **Manage Dependencies**: Ensure proper sequencing and avoid circular dependencies by using `depends_on` to manage resource dependencies. Terraform providers typically handle dependencies, but `depends_on` can enforce the correct order of operations when needed.
 
 <details>
@@ -228,4 +233,5 @@ resource "azurerm_resource_group" "rg" {
 | Application Insights | Application performance monitoring | [Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) |
 
 </details>
+
 - **Conduct Regular Reviews**: Ensure compliance, security, quality, and reliability by regularly reviewing code, monitoring infrastructure changes, and tracking deployments.
