@@ -47,7 +47,7 @@ variable "resource_name" {
 </details>
 
 <details>
-<summary>Example `variables.json`</summary>
+<summary>Example <code>variables.json</code></summary>
 
 ```json
 {
@@ -100,7 +100,7 @@ resource "azurerm_storage_account" "storage" {
 - **Manage Dependencies**: Ensure proper sequencing and avoid circular dependencies by using `depends_on` to manage resource dependencies. Terraform providers typically handle dependencies, but `depends_on` can enforce the correct order of operations when needed.
 
 <details>
-<summary>Example `depends_on`</summary>
+<summary>Example <code>depends_on</code></summary>
 
 ```terraform
 resource "azurerm_virtual_network" "vnet" {
