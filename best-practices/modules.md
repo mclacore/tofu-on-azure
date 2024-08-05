@@ -6,8 +6,10 @@
 
 ## Examples
 
+### Narrow scoping
+
 <details open>
-<summary>Do (narrow scoping)</summary>
+<summary>Do</summary>
 
 ```terraform
 module "vnet" {
@@ -28,7 +30,7 @@ module "vm" {
 
 </details>
 <details open>
-<summary>Don't do (monolith)</summary>
+<summary>Don't do</summary>
 
 ```terraform
 module "my-module" {
@@ -40,8 +42,11 @@ module "my-module" {
 ```
 
 </details>
+
+### Opinionated modules
+
 <details open>
-<summary>Do (opinion)</summary>
+<summary>Do</summary>
 
 ```terraform
 resource "azurerm_storage_account" "storage" {
@@ -66,7 +71,7 @@ module "storage" {
 
 </details>
 <details open>
-<summary>Don't do (pass-through)</summary>
+<summary>Don't do</summary>
 
 ```terraform
 resource "azurerm_storage_account" "storage" {
@@ -95,8 +100,11 @@ module "storage" {
 ```
 
 </details>
+
+### Pin versions
+
 <details open>
-<summary>Do (pin version)</summary>
+<summary>Do</summary>
 
 ```terraform
 terraform {
@@ -119,7 +127,7 @@ module "storage" {
 
 </details>
 <details open>
-<summary>Don't do (ref latest)</summary>
+<summary>Don't do</summary>
 
 ```terraform
 terraform {
