@@ -12,7 +12,7 @@ By default, OpenTofu state is stored locally, which isn't ideal for a few reason
 
 ## Configure remote state storage account
 
-Assuming you have OpenTofu configured at this point, let's configure our remote state storage accoung using it!
+Assuming you have OpenTofu configured at this point, let's configure our remote state storage account using it!
 
 1. Create a new directory for your remote state storage account and `cd` into it
 2. Create a new file named `providers.tf` in the directory and paste the following:

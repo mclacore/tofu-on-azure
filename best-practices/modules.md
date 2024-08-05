@@ -34,7 +34,7 @@ module "vm" {
 
 ```terraform
 module "my-module" {
-  source = "./modules/my-module"
+  source       = "./modules/my-module"
   vnet_name    = "my-vnet"
   storage_name = "my-storage"
   vm_name      = "my-vm"

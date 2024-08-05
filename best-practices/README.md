@@ -122,7 +122,7 @@ module "subnet" {
 
 ## VCS & CI/CD
 
-- **Use Version Control**: Track changes to code and collaborate with others using a version control system like Git. This is essential for manging changes, tracking the history of OpenTofu configurations, and effective collaboration.
+- **Use Version Control**: Track changes to code and collaborate with others using a version control system like Git. This is essential for managing changes, tracking the history of OpenTofu configurations, and effective collaboration.
 - **Branching Strategy**: Implement a branching strategy (e.g. GitFlow) to manage feature development, bug fixes, and releases. This ensures that code changes are organized and integrated smoothly.
 - **Plan and Review Changes**: Always run `tofu plan` to review the changes before applying them. This helps to identify potential issues and understand the impact of your changes.
 - **Integrate with CI/CD Pipelines**: Automate testing, building, and deployment of infrastructure by integrating the [OpenTofu GitHub Action](https://github.com/marketplace/actions/opentofu-setup-tofu) with your CI/CD pipelines. This ensures consistency, reliability, and repeatability in your deployments.
@@ -199,7 +199,7 @@ resource "azurerm_resource_group" "rg" {
 
 </details>
 
-- **Maintain Clear Documentation**: Ensure your OpenTofu configuraitons are well-documented and up-to-date. This helps onboard new team members, troubleshoot issues, and manage infrastructure effectively.
+- **Maintain Clear Documentation**: Ensure your OpenTofu configurations are well-documented and up-to-date. This helps onboard new team members, troubleshoot issues, and manage infrastructure effectively.
 - **Include Architecture Diagrams**: Provide architecture diagrams that illustrate the infrastructure setup. This helps new users to visualize the deployment and understand the relationship between resources.
 - **Review OpenTofu and Azure Provider Changelogs**: Stay informed about new features, bug fixes, and improvements by regularly reviewing the [OpenTofu changelog](https://github.com/opentofu/opentofu/releases) and changelog for each Azure Terraform provider used.
 
@@ -212,10 +212,10 @@ resource "azurerm_resource_group" "rg" {
 ## Security
 
 - **Adopt Security Scanning Tools**: Integrate tools like [Checkov](https://www.checkov.io/7.Scan%20Examples/Terraform%20Plan%20Scanning.html) or [Terrascan](https://runterrascan.io/docs/usage/command_line_mode/) into your CI/CD pipelines to scan for security vulnerabilities and compliance violations.
-- **Regular Security Audits**: Conduct regular security audits to identify and address vulnerabilities in your OpenTofu configurations. THis ensures that your infrastructure remains secure over time.
+- **Regular Security Audits**: Conduct regular security audits to identify and address vulnerabilities in your OpenTofu configurations. This ensures that your infrastructure remains secure over time.
 - **Secure Sensitive Information**: Manage and store sensitive information such as API keys, passwords, and certificates using dedicated secrets management services like Azure Key Vault.
 - **Least Privilege Principle**: Apply the principal of least privilege by granting minimal permissions required for resources. This reduces the risk of unauthorized access and enhances security.
-- **Isolate Environments**: Improve security by isolating environments and using seperate subscriptions, resource groups, and networks to prevent unauthorized access and reduce risks.
+- **Isolate Environments**: Improve security by isolating environments and using separate subscriptions, resource groups, and networks to prevent unauthorized access and reduce risks.
 - **Use Sensitive Keyword**: Prevent sensitive information from being displayed in logs, state files, and other outputs by using the sensitive keyword on sensitive variables and outputs.
 
 ## Monitoring
