@@ -5,15 +5,15 @@ The guide below outlines recommended best practices to follow when using OpenTof
 - Break down code into reusable modules for easier management, organization, and scalability. Promotes reusability and maintainability, reduces duplication, and makes code easier to understand.
 
 <details>
-    <summary>Example</summary>
+<summary>Example</summary>
 
-    ```terraform
-    module "resource_group" {
-        source   = "./modules/resource_group"
-        name     = "my-rg"
-        location = "East US"
-    }
-    ```
+```terraform
+module "resource_group" {
+    source   = "./modules/resource_group"
+    name     = "my-rg"
+    location = "East US"
+}
+```
 
 </details>
 
@@ -22,23 +22,23 @@ The guide below outlines recommended best practices to follow when using OpenTof
 - Manage dependencies between resources using `depends_on` to ensure proper sequencing and avoid circular dependencies.
 
 <details>
-    <summary>Example</summary>
+<summary>Example</summary>
 
-    ```terraform
-    resource "azurerm_virtual_network" "vnet" {
-        name                = "my-vnet"
-    }
+```terraform
+resource "azurerm_virtual_network" "vnet" {
+    name                = "my-vnet"
+}
 
-    module "subnet" {
-        source               = "./modules/subnet"
-        name                 = "my-subnet"
-        virtual_network_name = azurerm_virtual_network.vnet.name
-        depends_on           = [azurerm_virtual_network.vnet]
-    }
-    ```
+module "subnet" {
+    source               = "./modules/subnet"
+    name                 = "my-subnet"
+    virtual_network_name = azurerm_virtual_network.vnet.name
+    depends_on           = [azurerm_virtual_network.vnet]
+}
+```
 
-    > [!NOTE]
-    > Terraform providers typically handle resource dependencies automatically, but in some cases, you need to use `depends_on` to enforce the correct order of operations.
+> [!NOTE]
+> Terraform providers typically handle resource dependencies automatically, but in some cases, you need to use `depends_on` to enforce the correct order of operations.
 
 </details>
 
@@ -60,18 +60,18 @@ The guide below outlines recommended best practices to follow when using OpenTof
 - Tag your resources to enhance visibility, organization, and management of resources. Recommended to identify resources, track costs, and manage resources effectively.
 
 <details>
-    <summary>Example</summary>
+<summary>Example</summary>
 
-    ```terraform
-    resource "azurerm_resource_group" "rg" {
-        name     = "my-rg"
-        location = "East US"
-        tags = {
-            environment = "dev"
-            owner       = "John Doe"
-        }
+```terraform
+resource "azurerm_resource_group" "rg" {
+    name     = "my-rg"
+    location = "East US"
+    tags = {
+        environment = "dev"
+        owner       = "John Doe"
     }
-    ```
+}
+```
 
 </details>
 
