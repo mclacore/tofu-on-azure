@@ -1,15 +1,15 @@
 ## Modules
 
-- Avoid monolithic modules (e.g. a single module that creates a VNet, Storage Account, and VM). Modules should be narrowly scoped to a single cloud resources and its dependencies. This makes it more re-usable, and limits the potential blast radius of changes.
-- Modules should encode expertise, not simply pass-through values. Many of the official Terraform modules are simply pass-throughs, and don't provide much value as there is no _configuration_ expertise baked in. Instead, they are quite **generic**. Generic modules burden the user with the responsibility of knowing how to configure the underlying resource. Encode your company's requirements, security policies, and standards into your module. Make them **opinionated**.
-- Pin your module and provider versions. This is a best practice to ensure that your infrastructure is reproducible and doesn't break due to changes in the module or provider.
+- **Avoid Monolithic Modules**: Design modules with a narrow scope focused on a single cloud resource and its dependencies. This increases reusability and limits the potential impact of changes.
+- **Encode Expertise in Modules**: Build modules that incorporate your company's requirements, security policies, and standard. Avoid generic modules that pass through values without adding configuration expertise.
+- **Pin Module and Provider Versions**: Ensure infrastructure reproducibility and stability by pinning module and provider versions to specific versions or version ranges.
 
 ## Examples
 
 ### Narrow scoping
 
 <details open>
-<summary>Do</summary>
+<summary>Do:</summary>
 
 ```terraform
 module "vnet" {
@@ -30,7 +30,7 @@ module "vm" {
 
 </details>
 <details open>
-<summary>Don't do</summary>
+<summary>Don't do:</summary>
 
 ```terraform
 module "my-module" {
@@ -46,7 +46,7 @@ module "my-module" {
 ### Opinionated modules
 
 <details open>
-<summary>Do</summary>
+<summary>Do:</summary>
 
 ```terraform
 resource "azurerm_storage_account" "storage" {
@@ -71,7 +71,7 @@ module "storage" {
 
 </details>
 <details open>
-<summary>Don't do</summary>
+<summary>Don't do:</summary>
 
 ```terraform
 resource "azurerm_storage_account" "storage" {
@@ -104,7 +104,7 @@ module "storage" {
 ### Pin versions
 
 <details open>
-<summary>Do</summary>
+<summary>Do:</summary>
 
 ```terraform
 terraform {
@@ -127,7 +127,7 @@ module "storage" {
 
 </details>
 <details open>
-<summary>Don't do</summary>
+<summary>Don't do:</summary>
 
 ```terraform
 terraform {

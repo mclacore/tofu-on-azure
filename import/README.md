@@ -68,7 +68,7 @@ After the tool initializes (may take a few minutes), a list of resources to be i
 - `terraform.tfstate` - Contains the state of the imported resources
 
 7. Review the imported resources and make any necessary changes.
-8. Run `tofu init --upgrade` then `tofu plan`. If the terminal outputs **No changes. Your infrastructure matches the configuration.** then congratulations! You have successfully imported your resources and its state to Terraform.
+8. Run `tofu init --upgrade` then `tofu plan`. If the terminal outputs `No changes. Your infrastructure matches the configuration.` then congratulations! You have successfully imported your resources and its state to Terraform.
 
 ## Cleanup
 
