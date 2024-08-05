@@ -20,7 +20,7 @@ The guide below outlines recommended best practices to follow when using OpenTof
 - **Implement Input Validation**: Validate input variables to ensure they meet expected criteria and prevent misconfigurations. Use validation blocks to enforce constraints on variables. Richer validation can be achieved using [JSON Schema](https://developer.hashicorp.com/terraform/language/values/variables#custom-validation-rules).
 
 <details>
-<summary>Example `variables.tf`</summary>
+<summary>Example <code>variables.tf</code></summary>
 
 ```terraform
 variable "environment" {
