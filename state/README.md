@@ -78,7 +78,7 @@ To configure the backend state, you need the following Azure storage information
 az storage account list --resource-group tfstate --query "[].name" --output tsv
 ```
 
-2. Once you have the required information, create a new file named `backend.tf` in the directory and paste the following:
+2. Once you have the required information, create a new directory and a new file named `backend.tf` and paste the following:
 
 ```terraform
 terraform {
@@ -107,7 +107,7 @@ resource "azurerm_resource_group" "state-demo-secure" {
 }
 ```
 
-3. Run `tofu init` then `tofu apply` to configure the backend state
+3. Run `tofu init` then `tofu apply` to configure the backend state.
 
 4. Confirm the state is being stored by running the following:
 
@@ -116,7 +116,12 @@ az storage blob list --account-name <storage_account_name> --container-name tfst
 ```
 
 > [!NOTE]
-> Azure blobs are automatically locked before any operation that writes state. This pattern prevents concurrent state operations, which can cause corruption. For more info, see [state locking](https://www.terraform.io/docs/state/locking.html)
+> Azure blobs are automatically locked when any operation writes to state. This pattern prevents concurrent state operations, which can cause corruption. For more info, see [state locking](https://www.terraform.io/docs/state/locking.html)
 
 > [!NOTE]
 > Data stored in an Azure blob is encrypted before being persisted. When needed, the OpenTofu retrieves the state from the backend and stores it in local memory. If this pattern is used, state is never written to your local disk. For more info about Azure storage encryption, see [Azure storage encryption for data at rest](https://learn.microsoft.com/en-us/azure/storage/common/storage-service-encryption)
+
+## Cleanup
+
+- Cleanup the backend state by running `tofu destroy`
+- Cleanup the storage account by running `tofu destroy`
